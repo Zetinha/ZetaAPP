@@ -1,0 +1,21 @@
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="id_nome">Nome:</label>
+    {{ form.nome }}
+
+    <label for="id_idade">Idade:</label>
+    {{ form.idade }}
+
+    <label for="id_peso">Peso corporal (kg):</label>
+    {{ form.peso }}
+
+    <label for="id_genero">Gênero:</label>
+    {{ form.genero }}
+
+    <label for="id_indice_ipf">Índice IPF:</label>
+    {{ form.indice_ipf }}
+
+    <button type="submit">Enviar</button>
+</form>
+

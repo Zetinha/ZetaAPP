@@ -1,0 +1,35 @@
+{% extends 'pagina/base.html' %}
+
+{% block title %}Ranking | Zeta Powerlifting{% endblock %}
+
+{% block content %}
+<section class="ranking masculino">
+    <h2>Ranking Masculino</h2>
+    <ul>
+        {% for player in ranking_masculino %}
+            <li>
+                <strong>{{ player.nome }}</strong> — {{ player.idade }} anos, {{ player.peso }}kg — 
+                Total: {{ player.total_kg }}kg — 
+                IPF GL Points: {{ player.ipf_gl_points }}
+            </li>
+        {% empty %}
+            <li>Nenhum atleta masculino cadastrado ainda.</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<section class="ranking feminino">
+    <h2>Ranking Feminino</h2>
+    <ul>
+        {% for player in ranking_feminino %}
+            <li>
+                <strong>{{ player.nome }}</strong> — {{ player.idade }} anos, {{ player.peso }}kg — 
+                Total: {{ player.total_kg }}kg — 
+                IPF GL Points: {{ player.ipf_gl_points }}
+            </li>
+        {% empty %}
+            <li>Nenhum atleta feminino cadastrado ainda.</li>
+        {% endfor %}
+    </ul>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'pagina/base.html' %}
+
+{% block title %}Cadastrar Atleta{% endblock %}
+
+{% block content %}
+<section class="upload">
+    <h2>Cadastro de Atleta</h2>
+
+    {% if form.errors %}
+      <div class="form-errors" style="color: red; margin-bottom: 1em;">
+        <ul>
+          {% for field in form %}
+            {% for error in field.errors %}
+              <li>{{ field.label }}: {{ error }}</li>
+            {% endfor %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="id_nome">Nome:</label>
+        {{ form.nome }}
+
+        <label for="id_idade">Idade:</label>
+        {{ form.idade }}
+
+        <label for="id_peso">Peso corporal (kg):</label>
+        {{ form.peso }}
+
+        <label for="id_genero">Gênero:</label>
+        {{ form.genero }}
+
+        <label for="id_total_kg">Total em KGs:</label>
+        {{ form.total_kg }}
+
+        <label for="id_categoria">Categoria:</label>
+        {{ form.categoria }}
+
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+{% endblock %}

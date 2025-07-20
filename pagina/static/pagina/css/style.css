@@ -1,0 +1,215 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #007acc;
+    color: white;
+    padding: 1em 2em;
+    text-align: center;
+    position: relative; /* adicionado para posicionar o botão */
+}
+
+main {
+    padding: 2em;
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+    color: #007acc;
+    border-bottom: 2px solid #007acc;
+    padding-bottom: 0.5em;
+}
+
+.ranking ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.ranking li {
+    padding: 0.4em 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.upload form {
+    margin-top: 2em;
+}
+
+.upload button {
+    background: #007acc;
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.upload button:hover {
+    background: #005fa3;
+}
+
+footer {
+    text-align: center;
+    padding: 1em;
+    font-size: 0.8em;
+    color: #777;
+    margin-top: 2em;
+    border-top: 1px solid #ddd;
+}
+
+.ranking {
+    padding: 1em;
+    margin-bottom: 2em;
+    border-radius: 5px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+}
+
+.ranking.masculino {
+    background-color: #d0e7ff;
+    border: 2px solid #007acc;
+}
+
+.ranking.feminino {
+    background-color: #ffd0d8;
+    border: 2px solid #cc0055;
+}
+
+.ranking ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.ranking li {
+    padding: 0.4em 0;
+    border-bottom: 1px solid #bbb;
+}
+
+/* NOVO: botão no topo direito */
+.header-right {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+.btn-novo-score {
+    background-color: #fff;
+    color: #007acc;
+    padding: 0.5em 1em;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-novo-score:hover {
+    background-color: #e0f0ff;
+    border-color: #fff;
+}
+
+/* === Estilo de Rankings com Posições === */
+
+.ranking ul {
+    counter-reset: posicao;
+}
+
+.ranking li {
+    position: relative;
+    padding-left: 3em;
+    border-radius: 6px;
+    font-weight: 500;
+    background-color: #f2f2f2;
+    margin-bottom: 0.5em;
+}
+
+/* Círculo com número */
+.ranking li::before {
+    counter-increment: posicao;
+    content: counter(posicao);
+    position: absolute;
+    left: 0.8em;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+    background-color: #888;
+}
+
+/* Cores específicas por posição */
+.ranking li:nth-child(1)::before {
+    background-color: gold;
+    color: black;
+}
+
+.ranking li:nth-child(2)::before {
+    background-color: silver;
+    color: black;
+}
+
+.ranking li:nth-child(3)::before {
+    background-color: #cd7f32; /* bronze */
+}
+
+.ranking li:nth-child(4)::before,
+.ranking li:nth-child(5)::before {
+    background-color: #888;
+}
+
+.header-right {
+    position: absolute;
+    top: 1em;
+    right: 2em;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    background-color: white;
+    color: #007acc;
+    border: 2px solid #007acc;
+    padding: 0.5em 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 6px;
+    min-width: 160px;
+    z-index: 999;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 0.75em 1em;
+    text-decoration: none;
+    color: #007acc;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
