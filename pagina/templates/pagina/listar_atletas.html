@@ -1,0 +1,22 @@
+{% extends 'pagina/base.html' %}
+
+{% block title %}Alterar Cadastro | Zeta Powerlifting{% endblock %}
+
+{% block content %}
+<div class="listagem-wrapper">
+  <h2>Alteração de dados por atleta</h2>
+
+  <form method="get" action="{% url 'editar_atleta_redirect' %}">
+    <label for="atleta">Escolha um atleta:</label>
+    <select name="atleta_id" id="atleta" required>
+      <option value="" disabled selected>-- Selecione --</option>
+      {% for atleta in atletas %}
+        <option value="{{ atleta.id }}">{{ atleta.nome }}</option>
+      {% empty %}
+        <option disabled>Nenhum atleta cadastrado</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Editar</button>
+  </form>
+</div>
+{% endblock %}

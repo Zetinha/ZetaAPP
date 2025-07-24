@@ -8,7 +8,19 @@
     <ul>
         {% for player in ranking_masculino %}
             <li>
-                <strong>{{ player.nome }}</strong> — {{ player.idade }} anos, {{ player.peso }}kg — 
+                {% if forloop.counter == 1 %}
+                    🏆 
+                {% elif forloop.counter == 2 %}
+                    🥈 
+                {% elif forloop.counter == 3 %}
+                    🥉 
+                {% endif %}
+                <strong>
+                  <a href="{% url 'perfil_atleta' player.id %}">
+                    {{ player }}
+                  </a>
+                </strong> — 
+                {{ player.idade }} anos, {{ player.peso|floatformat:0 }}kg — 
                 Total: {{ player.total_kg }}kg — 
                 IPF GL Points: {{ player.ipf_gl_points }}
             </li>
@@ -23,12 +35,24 @@
     <ul>
         {% for player in ranking_feminino %}
             <li>
-                <strong>{{ player.nome }}</strong> — {{ player.idade }} anos, {{ player.peso }}kg — 
+                {% if forloop.counter == 1 %}
+                    🏆 
+                {% elif forloop.counter == 2 %}
+                    🥈 
+                {% elif forloop.counter == 3 %}
+                    🥉 
+                {% endif %}
+                <strong>
+                  <a href="{% url 'perfil_atleta' player.id %}">
+                    {{ player }}
+                  </a>
+                </strong> — 
+                {{ player.idade }} anos, {{ player.peso|floatformat:0 }}kg — 
                 Total: {{ player.total_kg }}kg — 
                 IPF GL Points: {{ player.ipf_gl_points }}
             </li>
         {% empty %}
-            <li>Nenhum atleta feminino cadastrado ainda.</li>
+            <li>Nenhuma atleta feminina cadastrada ainda.</li>
         {% endfor %}
     </ul>
 </section>

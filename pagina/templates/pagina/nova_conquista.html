@@ -1,10 +1,9 @@
 {% extends 'pagina/base.html' %}
-{% load static %}
-
-{% block title %}Login | Zeta Powerlifting{% endblock %}
+{% block title %}Nova Conquista{% endblock %}
 
 {% block content %}
-<section class="login-container">
+<div class="form-wrapper">
+  <h2>Nova Conquista</h2>
 
   {% if messages %}
     <div class="alert-messages">
@@ -14,13 +13,10 @@
     </div>
   {% endif %}
 
-  <h2>Login</h2>  <!-- Esse você pode manter se quiser um título -->
-
-  <form method="post" class="form-login">
+  <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="botao-voltar">Entrar</button>
+    <button type="submit" class="botao-voltar">Salvar</button>
   </form>
-
-</section>
+</div>
 {% endblock %}

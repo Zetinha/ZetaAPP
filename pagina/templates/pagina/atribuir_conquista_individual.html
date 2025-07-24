@@ -1,0 +1,30 @@
+{% extends 'pagina/base.html' %}
+
+{% block content %}
+<section class="form-wrapper">
+  <h2>Atribuir Conquista a Atleta</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <p style="color: green;">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-row">
+      <label for="{{ form.atleta.id_for_label }}">Atleta:</label>
+      {{ form.atleta }}
+    </div>
+
+    <div class="form-row">
+      <label for="{{ form.conquista.id_for_label }}">Conquista:</label>
+      {{ form.conquista }}
+    </div>
+
+    <div style="margin-top: 1em;">
+      <button type="submit">Atribuir Conquista</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

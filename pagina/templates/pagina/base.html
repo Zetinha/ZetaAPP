@@ -2,36 +2,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{% block title %}Meu Projeto Django{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'pagina/css/style.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Zeta APP{% endblock %}</title>
+
+  <!-- Bootstrap CSS via CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'pagina/css/style.css' %}">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Macondo+Swash+Caps&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <h1>Zeta Powerlifting 🚀</h1>
-        <div class="header-right">
-            {% if user.is_authenticated %}
-                <div class="dropdown">
-                    <button class="dropdown-toggle">{{ user.username }} ⯆</button>
-                    <div class="dropdown-menu">
-                        <a href="{% url 'cadastrar' %}">New Score</a>
-                        <a href="{% url 'logout' %}">Logout</a>
-                    </div>
-                </div>
-            {% else %}
-                <a class="login-button" href="{% url 'login' %}">Login</a>
-            {% endif %}
-        </div>
-    </header>
-    <main>
-        {% block content %}
-        <!-- conteúdo da página -->
-        {% endblock %}
-    </main>
-    <footer>
-        <p>© 2025 Vitor Santos Duarte</p>
-    </footer>
-    <script src="{% static 'pagina/js/script.js' %}"></script>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+    <a class="navbar-brand" href="{% url 'ranking' %}">Zeta Powerlifting</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+         {% if user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cadastrar' %}">Cadastrar Atleta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'listar_atletas' %}">Alterar Cadastro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'atribuir_conquista_individual' %}">🏆 Conquistas</a>
+          </li>          
+         {% endif %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+             <a class="btn btn-outline-light" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <main class="container my-4">
+    {% block content %}
+    <!-- conteúdo da página -->
+    {% endblock %}
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="custom-footer text-center py-3 mt-5">
+    <p class="mb-0">© 2025 Vitor Santos Duarte</p>
+  </footer>
+
+  <!-- JS do Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Seus scripts -->
+  <script src="{% static 'pagina/js/script.js' %}"></script>
+  <script src="{% static 'pagina/js/peso-dropdown.js' %}"></script>
+
 </body>
 </html>

@@ -1,7 +1,13 @@
 from django.db import models
+import math
+from django.contrib.auth.models import User
 
-# Create your models here.
-from django.db import models
+class Conquista(models.Model):
+    titulo = models.CharField(max_length=100, unique=True)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return self.titulo
 
 class Atleta(models.Model):
     GENERO_CHOICES = [
@@ -10,23 +16,51 @@ class Atleta(models.Model):
     ]
 
     CATEGORIA_CHOICES = [
-        ("mens_classic", "Masculino Clássico"),
-        ("womens_classic", "Feminino Clássico"),
+        ("mens_classic", "Masculino Clássico-RAW"),
+        ("womens_classic", "Feminino Clássico-RAW"),
     ]
 
+    PESO_CHOICES = [
+        ('52', '52 kg'),
+        ('57', '57 kg'),
+        ('63', '63 kg'),
+        ('69', '69 kg'),
+        ('76', '76 kg'),
+        ('84', '84 kg'),
+        ('84+', '84+ kg'),
+    ]
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     nome = models.CharField(max_length=100)
     idade = models.PositiveIntegerField()
-    peso = models.DecimalField(max_digits=5, decimal_places=2)
+    peso = models.CharField(max_length=10)
     genero = models.CharField(max_length=1, choices=GENERO_CHOICES)
     total_kg = models.DecimalField(max_digits=6, decimal_places=2)
     categoria = models.CharField(max_length=30, choices=CATEGORIA_CHOICES)
-
     ipf_gl_points = models.FloatField(null=True, blank=True)  # será calculado e salvo
+    foto = models.ImageField(upload_to='fotos_atletas/', null=True, blank=True)
+    conquistas = models.ManyToManyField('Conquista', blank=True)
+    conquista_destaque = models.ForeignKey(
+        'Conquista',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='destaques')
 
     def __str__(self):
+        nomes = self.nome.strip().split()
+        if self.conquista_destaque:
+            if len(nomes) >= 2:
+                primeiro = nomes[0]
+                ultimo = nomes[-1]
+                return f"{primeiro} “{self.conquista_destaque.titulo}” {ultimo}"
+            else:
+                return f"{self.nome} “{self.conquista_destaque.titulo}”"
         return self.nome
 
-import math
+
+
+
 
 GL_COEFFICIENTS = {
     "mens_equipped": (1236.25115, 1449.21864, 0.01644),
@@ -47,4 +81,3 @@ def calculate_gl_points(bodyweight: float, result: float, category: str) -> floa
     denominator = A - B * math.exp(-C * bodyweight)
     points = (result * 100) / denominator
     return round(points, 2)
-

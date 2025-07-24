@@ -1,0 +1,86 @@
+{% extends 'pagina/base.html' %}
+{% load static %}
+
+{% block title %}Perfil de {{ atleta.nome }}{% endblock %}
+
+{% block content %}
+<section class="perfil-container">
+
+  {% if messages %}
+    <div class="alert-messages" style="text-align: center; margin: 1em 0;">
+      {% for message in messages %}
+        <div class="alert">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div style="text-align: center; margin-top: 2em;">
+    <a href="{% url 'ranking' %}" class="botao-voltar">← Voltar ao Ranking</a>
+  </div>
+
+  <div class="card-perfil">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <label class="foto-wrapper">
+        {% if atleta.foto %}
+          <img src="{{ atleta.foto.url }}" alt="Foto de {{ atleta.nome }}">
+        {% else %}
+          <img src="{% static 'pagina/img/user_photo/avatar_placeholder.png' %}" alt="Foto padrão">
+        {% endif %}
+        <input type="file" name="foto" class="foto-input" onchange="this.form.submit()">
+        <div class="editar-overlay">✏️</div>
+      </label>
+    </form>
+
+    <div class="dados-basicos">
+      <h2>{{ atleta }}</h2>
+      <p><strong>Idade:</strong> {{ atleta.idade }} anos</p>
+      <p><strong>Peso:</strong> {{ atleta.peso }} kg</p>
+      <p><strong>Gênero:</strong> {{ atleta.get_genero_display }}</p>
+      <p><strong>Categoria:</strong> {{ atleta.get_categoria_display }}</p>
+    </div>
+  </div>
+
+  <div class="card-estatisticas">
+    <h3>Performance</h3>
+    <p><strong>Total levantado:</strong> {{ atleta.total_kg }} kg</p>
+    <p><strong>IPF GL Points:</strong> {{ atleta.ipf_gl_points }}</p>
+  </div>
+
+  <div class="card-conquistas">
+    <h3>Conquistas</h3>
+    <ul class="conquistas-lista">
+      {% if atleta.conquistas.all %}
+        {% for conquista in atleta.conquistas.all %}
+          <li>
+            {% if conquista == atleta.conquista_destaque %}
+              ⭐ <strong>{{ conquista.titulo }}</strong> — {{ conquista.descricao }}
+            {% else %}
+              🏅 {{ conquista.titulo }}
+            {% endif %}
+          </li>
+        {% endfor %}
+      {% else %}
+        <li style="opacity: 0.6;">Nenhuma conquista atribuída.</li>
+      {% endif %}
+    </ul>
+
+    {% if user.is_authenticated and user == atleta.user and atleta.conquistas.exists %}
+      <form method="post" style="margin-top: 1em;">
+        {% csrf_token %}
+        <label for="conquista_destaque"><strong>Selecionar conquista de destaque:</strong></label>
+        <select name="conquista_destaque" id="conquista_destaque">
+          <option value="">-- Nenhuma --</option>
+          {% for conquista in atleta.conquistas.all %}
+            <option value="{{ conquista.id }}" {% if conquista == atleta.conquista_destaque %}selected{% endif %}>
+              {{ conquista.titulo }}
+            </option>
+          {% endfor %}
+        </select>
+        <button type="submit" style="margin-left: 1em;">Salvar</button>
+      </form>
+    {% endif %}
+  </div>
+
+</section>
+{% endblock %}
